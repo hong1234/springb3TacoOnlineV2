@@ -1,0 +1,46 @@
+package com.hong.flyway.controller;
+
+import java.util.List;
+import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import com.hong.flyway.domain.*;
+import com.hong.flyway.service.*; 
+
+@RestController
+@RequestMapping("/api/v1/cart")
+public class CartController { 
+
+    private CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    // @GetMapping("/{cartId}")
+    // public Cart getCart(@PathVariable Integer cartId) throws ServiceException {
+    //     return cartService.getCart(cartId); 
+    // }
+
+    @GetMapping("/{uuId}")
+    public Cart getCartByUuid(@PathVariable String uuId) throws ServiceException {
+        return cartService.getCartByUuid(uuId); 
+    }
+
+    @PostMapping("/addtaco")
+    public Cart addTaco(@RequestBody TacoDTO dto) throws ServiceException {
+        return cartService.addTaco(dto);
+    }
+
+    // @GetMapping("/{customerId}/checkout")
+    // public Order cartCheckout(@PathVariable String customerId) throws ServiceException {
+    //     return cartService.cartCheckOut(customerId);  
+    // }
+
+    @PostMapping("/checkout")
+    public Order cartCheckout(@RequestBody OrderDTO dto) throws ServiceException {
+        return cartService.cartCheckOut(dto); 
+    }
+}
