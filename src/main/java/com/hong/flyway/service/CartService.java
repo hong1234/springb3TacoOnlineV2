@@ -28,7 +28,7 @@ public class CartService {
         return getCartByUUID(uuId); 
     }
 
-    public CartREC addTaco(TacoDTO dto) throws ServiceException { 
+    public CartREC addTaco(TacoDTO dto) throws ServiceException {  
         int[] ingredients = dto.getIngredients();
         
         Taco taco = new Taco();
@@ -111,7 +111,7 @@ public class CartService {
     //     }
     // }
 
-     public CartREC cartRecord(Cart cart) {
+    public CartREC cartRecord(Cart cart) {
         return new CartREC(
             cart.getId(),
             cart.getUuid()

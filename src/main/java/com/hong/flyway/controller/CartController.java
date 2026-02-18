@@ -31,8 +31,13 @@ public class CartController {
     }
 
     @PostMapping("/addtaco")
-    public CartREC addTaco(@RequestBody TacoDTO dto) throws ServiceException {
-        return cartService.addTaco(dto);
+    public ResponseEntity<CartREC>  addTaco(@RequestBody TacoDTO dto) throws ServiceException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.addTaco(dto));
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<OrderREC> cartCheckout(@RequestBody OrderDTO dto) throws ServiceException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.cartCheckOut(dto));
     }
 
     // @GetMapping("/{customerId}/checkout")
@@ -50,15 +55,5 @@ public class CartController {
     //     cartService.cartCheckOut(dto);
     //     return ResponseEntity.ok().build();
     // }
-
-    // @PostMapping("/checkout")
-    // public ResponseEntity<String> cartCheckout(@RequestBody OrderDTO dto) throws ServiceException {
-    //     cartService.cartCheckOut(dto);
-    //     // return ResponseEntity.status(HttpStatus.CREATED).body("Order created");
-    // }
-
-    @PostMapping("/checkout")
-    public OrderREC cartCheckout(@RequestBody OrderDTO dto) throws ServiceException {
-        return cartService.cartCheckOut(dto);
-    }
+    
 }
