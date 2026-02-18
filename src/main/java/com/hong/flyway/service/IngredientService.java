@@ -43,7 +43,7 @@ public class IngredientService {
             if(name.equals("sauce"))
                 title = "Select your sauce";
             if(name.equals("drinks"))
-                title = "Select your drinks";
+                title = "and perhaps a drink";
 
             categories.add(new Category(name, title, filterByType(ingredients, type)));
         }
