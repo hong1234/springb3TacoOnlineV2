@@ -30,19 +30,34 @@ public class CartService {
 
     public CartREC addTaco(TacoDTO dto) throws ServiceException {  
         int[] ingredients = dto.getIngredients();
+        List<Ingredient> ings = ingredientRepository.findAll();
+
+        // ings.forEach((ing) -> {
+        //     System.out.print(ing.getId());
+        //     System.out.print("-");
+        // });
         
         Taco taco = new Taco();
         taco.setName(dto.getName());
         taco.setQty(dto.getQty());
     
         for (int i = 0; i < ingredients.length; i++){
-            taco.addIngredient(ingredientRepository.findById(ingredients[i]).get());
+            taco.addIngredient(ings.get(ingredients[i] - 1));
         }
+
+        // for (int i = 0; i < ingredients.length; i++){
+        //     taco.addIngredient(ingredientRepository.findById(ingredients[i]).get());
+        // }
 
         Cart cart = getCartByUUID(dto.getUuid());
         cart.addTaco(taco);
         cart = cartRepository.save(cart);
         return cartRecord(cart);
+
+        // return new CartREC(
+        //     1,
+        //     "abcd"
+        // );
     }
 
     public OrderREC cartCheckOut(OrderDTO dto) throws ServiceException {
@@ -91,6 +106,20 @@ public class CartService {
         return orderRecord(order);
     }
 
+    public CartREC cartRecord(Cart cart) {
+        return new CartREC(
+            cart.getId(),
+            cart.getUuid()
+        );
+    }
+
+    public OrderREC orderRecord(Order order) {
+        return new OrderREC(
+            order.getId(),
+            order.getUuid()
+        );
+    }
+
     public Cart getCartByUUID(String uuId) {
         Cart cart = cartRepository.findByUuid(uuId).orElse(new Cart());
         if (cart.getId()==null) {
@@ -110,19 +139,5 @@ public class CartService {
     //         return cartRepository.save(cart);
     //     }
     // }
-
-    public CartREC cartRecord(Cart cart) {
-        return new CartREC(
-            cart.getId(),
-            cart.getUuid()
-        );
-    }
-
-    public OrderREC orderRecord(Order order) {
-        return new OrderREC(
-            order.getId(),
-            order.getUuid()
-        );
-    }
 
 }
