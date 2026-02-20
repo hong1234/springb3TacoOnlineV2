@@ -15,7 +15,7 @@ CREATE TABLE cart (
 CREATE TABLE taco (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  -- unit_price DECIMAL(10, 2) NOT NULL,
+  unit_price DECIMAL(10, 2) NOT NULL,
   qty INT NOT NULL,
   created_at timestamp NOT NULL,
   cart_id INT NOT NULL,
@@ -59,7 +59,8 @@ CREATE TABLE orders (
 CREATE TABLE item (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  -- unit_price DECIMAL(10, 2) NOT NULL,
+  unit_price DECIMAL(10, 2) NOT NULL,
+  sum_price DECIMAL(10, 2) NOT NULL,
   qty INT NOT NULL,
   created_at timestamp NOT NULL,
   order_id INT NOT NULL,

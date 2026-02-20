@@ -40,13 +40,24 @@ public class CartService {
         Taco taco = new Taco();
         taco.setName(dto.getName());
         taco.setQty(dto.getQty());
-    
+        taco.setUnitPrice(BigDecimal.ZERO);
+
         for (int i = 0; i < ingredients.length; i++){
-            taco.addIngredient(ings.get(ingredients[i] - 1));
+            for (Ingredient ing : ings) {
+                if (ing.getId() == ingredients[i]) {
+                    taco.addIngredient(ing);
+                    taco.setUnitPrice(ing.getUnitPrice().add(taco.getUnitPrice()));
+                    break;
+                }
+            }
         }
+    
+        // for (int i = 0; i < ingredients.length; i++){
+        //     taco.addIngredient(ings.get(ingredients[i] - 1));
+        // }
 
         // for (int i = 0; i < ingredients.length; i++){
-        //     taco.addIngredient(ingredientRepository.findById(ingredients[i]).get());
+        //     taco.addIngredient(ingredientRepository.findById(ingredients[i]).get()); 
         // }
 
         Cart cart = getCartByUUID(dto.getUuid());
@@ -75,28 +86,30 @@ public class CartService {
 
         Item temp;
         BigDecimal total = BigDecimal.ZERO;
-        BigDecimal ingTotal = BigDecimal.ZERO;
+        BigDecimal sum = BigDecimal.ZERO;
+
         for (Taco taco : cart.getTacos()) {
-            
             temp = new Item();
             temp.setName(taco.getName());
             temp.setQty(taco.getQty());
+            temp.setUnitPrice(taco.getUnitPrice());
+            temp.setIngredients(taco.getIngredients());
 
-            for (Ingredient ing : taco.getIngredients()) {
-                temp.addIngredient(ingredientRepository.findById(ing.getId()).get());
-                ingTotal = ing.getUnitPrice().add(ingTotal);
-            }
+            sum = BigDecimal.valueOf(taco.getQty()).multiply(taco.getUnitPrice());
+            temp.setSumPrice(sum);
 
             temp.setOrder(order);
             order.getItems().add(temp);
 
-            total = BigDecimal.valueOf(taco.getQty()).multiply(ingTotal).add(total);
-            ingTotal = BigDecimal.ZERO;
+            // total = BigDecimal.valueOf(taco.getQty()).multiply(taco.getUnitPrice()).add(total);
+            total = sum.add(total);
+            sum = BigDecimal.ZERO;
         }
 
         order.setItemsPrice(total);
 
         total = BigDecimal.valueOf(Double.valueOf("4.99")).add(total);
+
         order.setTotalPrice(total);
 
         order = orderRepository.save(order);

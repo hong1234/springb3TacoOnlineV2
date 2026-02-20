@@ -2,7 +2,7 @@ package com.hong.flyway.domain;
 
 import java.util.Date;
 import java.time.LocalDateTime;
-// import java.math.BigDecimal;
+import java.math.BigDecimal;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -41,7 +41,7 @@ public class Taco {
   @NotNull
   @Size(min=5, message="Name must be at least 5 characters long")
   private String name; 
-  // private BigDecimal unitPrice;
+  private BigDecimal unitPrice;
   private Integer qty;
   private LocalDateTime createdAt; //  = LocalDateTime.now();
 

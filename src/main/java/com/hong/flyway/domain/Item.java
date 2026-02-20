@@ -41,8 +41,9 @@ public class Item {
   @NotNull
   @Size(min=5, message="Name must be at least 5 characters long")
   private String name;
-  // private BigDecimal unitPrice;
+  private BigDecimal unitPrice;
   private Integer qty;
+  private BigDecimal sumPrice;
   private LocalDateTime createdAt; //  = LocalDateTime.now();  
 
   // @ManyToMany(targetEntity=Ingredient.class)
