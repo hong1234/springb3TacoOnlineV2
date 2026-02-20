@@ -71,6 +71,26 @@ public class CartService {
         // );
     }
 
+    public Cart qtyPlus(QtyDTO dto){
+        Cart cart =  getCartByUUID(dto.getUuid());
+
+        for (Taco taco : cart.getTacos()) {
+            if(taco.getId().equals(dto.getTacoId())) {
+                taco.setQty(taco.getQty() + 1);
+                break;
+            }
+        }
+
+        cart = cartRepository.save(cart);
+        return cart;
+        // return cartRecord(cart);
+    }
+
+    public Cart qtyMinus(QtyDTO dto){
+        Cart cart =  getCartByUUID(dto.getUuid());
+        return cart;
+    }
+
     public OrderREC cartCheckOut(OrderDTO dto) throws ServiceException {
 
         Cart cart = getCartByUUID(dto.getUuid());
@@ -142,7 +162,7 @@ public class CartService {
         return cart;
     }
 
-    // public Cart getCartByUUID(String uuId) {
+    // public Cart getCartByUUID(String uuId) { 
     //     Optional<Cart> optionalCart = cartRepository.findById(1);
     //     if (optionalCart.isPresent()) {
     //         return optionalCart.get(); 
