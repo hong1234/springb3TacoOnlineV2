@@ -57,7 +57,7 @@ public class Cart implements Serializable {
   }
 
   public void removeTaco(Taco taco) {
-    // taco.setCart(null); // ??
+    taco.setCart(null); // ??
     this.tacos.remove(taco);
   }
 
