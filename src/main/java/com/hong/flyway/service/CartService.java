@@ -71,7 +71,7 @@ public class CartService {
         // );
     }
 
-    public Cart qtyPlus(QtyDTO dto){
+    public CartREC qtyPlus(QtyDTO dto){
         Cart cart =  getCartByUUID(dto.getUuid());
 
         for (Taco taco : cart.getTacos()) {
@@ -82,11 +82,11 @@ public class CartService {
         }
 
         cart = cartRepository.save(cart);
-        return cart;
-        // return cartRecord(cart); 
+        // return cart;
+        return cartRecord(cart); 
     }
 
-    public Cart qtyMinus(QtyDTO dto){
+    public CartREC qtyMinus(QtyDTO dto){
         Cart cart =  getCartByUUID(dto.getUuid());
         
         for (Taco taco : cart.getTacos()) {
@@ -101,7 +101,8 @@ public class CartService {
         }
 
         cart = cartRepository.save(cart);
-        return cart;
+        // return cart;
+        return cartRecord(cart);
     }
 
     public OrderREC cartCheckOut(OrderDTO dto) throws ServiceException {

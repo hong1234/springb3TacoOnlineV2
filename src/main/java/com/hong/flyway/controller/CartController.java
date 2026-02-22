@@ -36,9 +36,9 @@ public class CartController {
     }
 
     @PutMapping("/qty")
-    public ResponseEntity<Cart> QtyUpdate(@RequestBody QtyDTO dto) throws ServiceException {
+    public ResponseEntity<CartREC> QtyUpdate(@RequestBody QtyDTO dto) throws ServiceException {
         String action = dto.getModus();
-        Cart newCart = null;
+        CartREC newCart = null;
         if(action.equals("add")){
             newCart = cartService.qtyPlus(dto);
         } else {
