@@ -14,6 +14,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 // import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import com.hong.flyway.repository.UserRepository;
+
 @Configuration
 public class SecurityConfiguration {
 
@@ -39,6 +45,21 @@ public class SecurityConfiguration {
             )
             .httpBasic(Customizer.withDefaults());
         return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    // @Bean
+    // PasswordEncoder passwordEncoder() {
+    //     return new BCryptPasswordEncoder();
+    // }
+
+    @Bean
+    UserDetailsService userDetailsService(UserRepository repo) {
+        return username -> repo.findByUsername(username).asUser();
     }
 
 }

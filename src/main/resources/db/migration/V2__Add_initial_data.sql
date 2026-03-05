@@ -12,6 +12,16 @@
 -- insert into orders (delivery_name, delivery_street, delivery_city, cc_number, placed_at) 
 -- values ('Muster Man', 'Hansa Str.5', '80636 Munich', 'RA556677', '2026-01-30 10:00:56');
 
+INSERT INTO 
+    user_account (username, password, authority)
+    VALUES 
+    ('user','user','ROLE_USER'),
+    ('admin','admin','ROLE_ADMIN');
+-- VALUES 
+--     ('user','$2a$10$5I5BSwXCEq1W8w/zW4MET.3sXy5z9pVEkhu/odPyvxRixN2DMRhXS','ROLE_USER'),
+--     ('admin','$2a$10$JUR1QIuvDdcA.NK.9tJNb.Yk6bmPMxgRS2g6.xkGachnoG7ItTq36','ROLE_ADMIN');
+
+
 insert into ingredient (mark, name, unit_price, ingredient_type) values ('FLTO', 'Flour Tortilla', 3.99, 'WRAP');
 insert into ingredient (mark, name, unit_price, ingredient_type) values ('COTO', 'Corn Tortilla', 3.99, 'WRAP');
 
